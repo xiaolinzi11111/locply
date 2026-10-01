@@ -1,0 +1,24 @@
+# Never commit application source into this public marketing/releases repo
+src/
+apps/
+packages/
+plugins/
+node_modules/
+dist/
+build/
+.release-staging/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Large binaries: prefer GitHub/Gitee Releases or CDN, not git history
+*.exe
+*.dmg
+*.AppImage
+*.msi
+*.zip
+*.7z
