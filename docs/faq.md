@@ -2,23 +2,23 @@
 
 ### Is Locply open source?
 
-No. Locply is proprietary / closed source. This public repo hosts docs, feedback, and release links only.
+No. Locply is proprietary / closed source. This public repo hosts docs and feedback only.
 
 ### Is my data uploaded?
 
-Product design is local-first: analysis is meant to stay on your device. See the current privacy terms at [https://www.locply.com/legal/](https://www.locply.com/legal/).
+Product design is local-first: analysis is meant to stay on your device via **SQLite WASM** and browser storage. See the current privacy terms at [https://www.locply.com/legal/](https://www.locply.com/legal/).
 
-### Web vs Desktop?
+### What database does Locply use?
 
-| | Web | Desktop |
-|--|-----|---------|
-| Install | No | Yes |
-| Persistence | Browser local storage / WASM | Local DuckDB file |
-| Best for | Trial, light use | Ongoing local workspace |
+SQL runs in the browser with **SQLite WASM**. When supported, Locply prefers OPFS for durable local files; otherwise it may fall back to less durable in-browser modes. Metadata uses IndexedDB-style local storage.
+
+### Will clearing my browser wipe my workspace?
+
+Yes, it can. Clearing site data, resetting the profile, or using private browsing can remove local workspaces. Export important data yourself.
 
 ### Where do I report bugs?
 
-Open an Issue in this repository. Include OS, version, and steps to reproduce.
+Open an Issue in this repository. Include browser, OS, version, and steps to reproduce.
 
 ### Can I contribute code?
 
