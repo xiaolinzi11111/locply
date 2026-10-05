@@ -7,7 +7,8 @@ labels: bug
 
 **Environment**
 - Locply: Web / Desktop (version if known):
-- OS:
+- OS / browser:
+- File type / approximate row count (no confidential data):
 
 **What happened**
 

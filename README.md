@@ -1,10 +1,11 @@
 # Locply
 
-**Local-first BI in the browser** — import CSV / Excel / JSON / SQL, clean data, query with **SQLite WASM**, and build charts & dashboards.  
-**Nothing is uploaded.** Analysis runs on your device.
+**Local BI from files on your machine** — import CSV / Excel / JSON / SQL, clean data, query locally, and build **charts and dashboards**.
 
-> 这是 **公开发行与反馈仓**：仅包含产品说明与文档。  
-> **源码不开放**（闭源商业软件）。应用开发在私有仓库进行。
+Locply is not a hosted warehouse and not a one-shot file converter. The same workspace takes you from a spreadsheet to Explore to a dashboard.
+
+> This is the **public docs and feedback** repository.  
+> **Source is not published** (proprietary). Application development lives in a private repo.
 
 ---
 
@@ -12,26 +13,39 @@
 
 | Channel | Link |
 |--------|------|
-| Web | [https://www.locply.com/](https://www.locply.com/) |
+| Web (SQLite in the browser) | [https://www.locply.com/](https://www.locply.com/) |
+| Desktop (DuckDB on this PC) | [Download for Windows](https://www.locply.com/download/) |
+| Tools (clean / convert, then chart) | [https://www.locply.com/tools/](https://www.locply.com/tools/) |
 | Legal / privacy | [https://www.locply.com/legal/](https://www.locply.com/legal/) |
 
-**Engine today:** SQL queries run in-browser via **SQLite WASM** (prefer OPFS persistence when the browser supports it; otherwise fall back to in-memory + IndexedDB-backed metadata).
+---
+
+## Why Locply
+
+| You need | Locply |
+|----------|--------|
+| Charts and dashboards from a file | Import → clean → local SQL → chart → dashboard |
+| Try without installing | **Web:** SQLite WASM in this browser origin |
+| Larger files and a lasting project | **Desktop:** DuckDB in `%APPDATA%/Locply/workspace.duckdb` |
+| Not sending tables to a vendor cloud | Imported datasets are **not** stored on Locply servers |
+
+Website visits still go through Cloudflare. Packaged desktop may fetch a public [license policy](https://www.locply.com/license/policy.json), send a launch ping, and check updates. That is not a dataset upload. Details: [Privacy Policy](https://www.locply.com/legal/privacy/).
 
 ---
 
 ## What you get
 
-- **Private by default** — datasets stay on this device; no analysis upload
 - **Import** CSV, Excel, JSON, SQL
-- **Clean & model** data in the workspace (type casting, transforms, local modeling)
-- **Explore** metrics / dimensions, filters, and SQL-backed queries locally
-- **Dashboards** — drag-and-drop layout of charts and components
+- **Clean & model** in the same product as Data Input and Tools
+- **Explore** metrics, dimensions, filters, and SQL on the local engine
+- **Dashboards** — layout, cross-filters, reusable charts
+- **Two engines, one UI** — browser SQLite for a quick start; desktop DuckDB for scale
 
 ---
 
 ## Chart highlights
 
-Locply focuses on interactive, local visualization rather than server-side BI:
+Locply is interactive local visualization, not server-side BI:
 
 | Area | What you can do |
 |------|-----------------|
@@ -46,30 +60,32 @@ Also:
 
 - Chart controls aligned with familiar BI explore flows (metrics, dimensions, filters)
 - Dashboard assembly with reusable chart slices
-- Local query + viz loop — change the chart, re-query SQLite WASM, no round-trip to a remote warehouse
+- Local query + viz loop — change the chart, re-query SQLite (web) or DuckDB (desktop), no round-trip to a remote warehouse
 
 ---
 
 ## Risks & limitations
 
-Please read before relying on Locply for critical workflows:
+Read this before relying on Locply for critical workflows:
 
 | Risk | What it means |
 |------|----------------|
-| **Browser storage** | Data lives in the browser (OPFS / IndexedDB / local persistence). Clearing site data, uninstalling the browser profile, or using private/incognito mode can wipe the workspace. |
-| **Single device** | No built-in multi-device sync or multi-user collaboration on one shared cloud dataset. Each browser profile is its own workspace. |
-| **Size & memory** | SQLite WASM and the page share browser memory. Very large files or heavy dashboards may be slow, fail to load, or hit browser limits. Prefer smaller extracts when possible. |
-| **OPFS availability** | Durable OPFS SQLite needs a modern browser and a secure context (`https://` or `localhost`). On unsupported setups Locply may fall back to less durable modes. |
-| **Not a remote warehouse** | Locply is not a hosted warehouse / ETL platform. There is no remote DB connection model for “connect to production Postgres and leave data on the server.” |
-| **Backup is your responsibility** | Export / re-import important datasets yourself. Do not treat browser storage alone as the only backup. |
+| **Web storage** | The website keeps work in this browser origin (OPFS / IndexedDB). Clearing site data, another browser, or private mode will not restore it. |
+| **Desktop file** | Desktop stores `workspace.duckdb` on disk. Uninstalling, deleting that folder, or disk failure can destroy it. Back it up yourself. |
+| **Single device** | No Locply cloud sync. Web and desktop workspaces are **not** the same store unless you export and import. |
+| **Size & memory** | Web SQLite shares the browser tab. Very large files belong on **desktop DuckDB**. Free-plan caps on the web are in the published license policy. |
+| **OPFS availability** | Durable browser SQLite needs a modern browser and `https://` or `localhost`. |
+| **Not a remote warehouse** | There is no “connect production Postgres and leave data on the server” product. |
+| **Network that is not your dataset** | Page delivery, license-policy fetch, desktop launch ping, and updates still use HTTPS. See Privacy. |
 | **Closed source** | Source is not published. Security reviews are limited to vendor process and your own threat model. |
-| **Trial / product surface** | Features and limits may change; always check current terms at [locply.com/legal](https://www.locply.com/legal/). |
+| **Trial / product surface** | Features and limits may change; check [locply.com/legal](https://www.locply.com/legal/). |
 
 ---
 
 ## Docs
 
 - [Getting started](docs/getting-started.md)
+- [Desktop](docs/desktop.md)
 - [FAQ](docs/faq.md)
 
 ---
@@ -90,10 +106,12 @@ Proprietary. See [LICENSE](LICENSE).
 
 ## 中文简介
 
-Locply 是浏览器内的**本地优先 BI**：导入 CSV / Excel / JSON / SQL，清洗与建模，用 **SQLite WASM** 在本地查询，并制作图表与看板。**数据不上传。**
+Locply 是**本机 BI**：导入 CSV / Excel / JSON / SQL，清洗与建模，在设备上查询并做图表与看板。不是远端数仓，也不是一次性转换站。
 
-**图表特点：** 覆盖时序、对比、分布、层级/流向、表格等多类可视化；在设备上完成探索、筛选与看板拼装，无需把数据集发到远端数仓。
+- **网站：** 浏览器里的 SQLite，免安装，适合试和小文件。
+- **桌面：** 本机 DuckDB（Windows 官方安装包），适合更大文件和长期项目。
+- **表不上 Locply 云。** 站点日志、许可证策略请求、桌面启动 ping 见 [隐私政策](https://www.locply.com/legal/privacy/)。
 
-**主要风险：** 浏览器清站点数据可能丢工作区；单设备、无默认云同步；大数据受浏览器内存与 SQLite WASM 限制；OPFS 持久化依赖现代浏览器与 HTTPS/localhost；需自行备份导出；源码不开源。
+**主要风险：** 网站清站点数据会丢工作区；桌面依赖本机 `workspace.duckdb`，需自行备份；两端存储不自动同步；大数据请用桌面；源码不开源。
 
-本仓库用于推广与文档；**不包含源码**。请通过 Issue 反馈问题与建议。
+本仓库用于说明与反馈；**不包含源码**。请通过 Issue 反馈问题与建议。

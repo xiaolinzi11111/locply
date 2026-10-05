@@ -31,14 +31,11 @@ git push -u origin main
 
 Do **not** add the private `charts` remote here, and do **not** copy `src/` into this folder.
 
-## 4. Attach installers to Releases
+Official Windows installer is served from [https://www.locply.com/download/](https://www.locply.com/download/) (Cloudflare → private object storage). Keep this repo’s README download link pointing at that URL.
 
-After `npm run dist` in `charts/apps/desktop`:
+GitHub Releases are optional for notes; do not instruct users to install unsigned copies from random mirrors.
 
-1. Tag a version on this public repo (e.g. `v1.0.0`)
-2. Create a Release
-3. Upload `.exe` / `.dmg` / `.AppImage` as assets  
-   **or** upload to Cloudflare R2 and put URLs in `README.md`
+After `npm run dist` in `charts/apps/desktop`, publish the artifact to the download bucket used by Pages, then confirm `/download/Locply_Setup.exe` resolves.
 
 ## 5. Optional: mirror GitHub ↔ Gitee
 

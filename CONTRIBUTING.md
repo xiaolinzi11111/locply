@@ -2,8 +2,7 @@
 
 Locply application **source code is not open**. This public repository is for:
 
-- Product documentation
-- Release notes and installer links
+- Product documentation (web SQLite + desktop DuckDB, download links)
 - Bug reports and feature requests
 
 ## How to help
